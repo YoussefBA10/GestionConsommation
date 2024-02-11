@@ -1,0 +1,181 @@
+{% extends 'index-admin.html.twig' %}
+
+{% block body %}
+
+ {% block showactions %}
+          <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100">
+              <div class="card-body p-4">
+                <h5 class="card-title fw-semibold mb-4">Recent action</h5>
+                <div class="table-responsive">
+                  <table class="table text-nowrap mb-0 align-middle">   
+                          <a class="fw-semibold mb-0 fs-4" href="{{path('admin-ajouter-typename',{'id' : user.id}) }}"> Ajouter</a>
+                    <thead class="text-dark fs-4">
+                      <tr>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Id</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Type</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">User Name</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Quantite</h6>
+                        </th>  
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Date</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Description</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Action Score</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Niveau Danger</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">CRUD</h6>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tboxdy>
+                        {% for action in actions %}
+                      <tr>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{action.id}}</h6></td>
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">{{action.type}}</h6>
+                            <span class="fw-normal">{{action.type.actiontype}}</span>                          
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0 fs-4">{{action.user}}</h6>
+                        </td>
+                        {% if action.quantite is empty %}
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{ action.getQuantiteTime|date('H:i:s')}}</p>
+                        </td>
+                        {% elseif action.type.getType == 'plastique' %} 
+                        
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{ action.quantite}} KG</p>
+                        </td>
+                        {% elseif action.type.getType == 'carburant' %}
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{ action.quantite}} L</p>
+                        </td>
+                        {% elseif action.type.getType == 'gaz' %}
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{ action.quantite}} m³/min</p>
+                        </td>
+                        {% elseif action.type.getType == 'electrique' %}
+                        <td class="border-bottom-0">
+                          <p class="mb-0 fw-normal">{{ action.quantite}} kw/min</p>
+                        </td>
+                        {% endif %}
+                        <td class="border-bottom-0">
+                          <div class="d-flex align-items-center gap-2">
+                            <span class="fw-semibold mb-0 fs-4">{{action.date|date('H:i:s')}}</span>
+                          </div>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="mb-0 fw-normal">{{action.description}}</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="badge bg-primary rounded-3 fw-semibold">{{action.getActionScore}}</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0 fs-4">{{action.getNiveauDanger}}</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                       
+                        <div>
+                            <a class="fw-semibold mb-0 fs-4" href="{{path('admin-supprimer-action',{'iduser' : user.id,'idaction' : action.id}) }}"> Supprimer</a>
+                        </div>
+                        </td>
+                      </tr>
+                      {% endfor %}         
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100">
+              <div class="card-body p-4">
+                <h5 class="card-title fw-semibold mb-4">Liste Type D'action</h5>
+                <div class="table-responsive">
+                  <table class="table text-nowrap mb-0 align-middle">   
+                          <a class="fw-semibold mb-0 fs-4" href="{{path('admin-ajouter-typename',{'id' : user.id}) }}"> Ajouter</a>
+                    <thead class="text-dark fs-4">
+                      <tr>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Id</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Nom</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Score</h6>
+                        </th>  
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Materiel</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">Unite de mesure</h6>
+                        </th>
+                        <th class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0">CRUD</h6>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tboxdy>
+                        {% for type in types %}
+                      <tr>
+                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">{{type.id}}</h6></td>
+                        <td class="border-bottom-0">
+                            <h6 class="fw-semibold mb-1">{{type.nom}}</h6>
+                            <span class="fw-normal">{{type.actiontype}}</span>                          
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="fw-semibold mb-0 fs-4">{{type.score}}</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="mb-0 fw-normal">{{type.materiel}}</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                          <h6 class="badge bg-primary rounded-3 fw-semibold">{{type.type}}</h6>
+                        </td>
+                        <td class="border-bottom-0">
+                        <div>
+                            <a class="fw-semibold mb-0 fs-4" href="{{path('admin-modifier-typename',{'id' : user.id}) }}"> Modifier</a>
+                        </div>
+                        <div>
+                            <a class="fw-semibold mb-0 fs-4" href="{{path('admin-supprimer-typename',{'iduser' : user.id,'idtype' : type.id}) }}"> Supprimer</a>
+                        </div>
+                        </td>
+                      </tr>
+                      {% endfor %}         
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

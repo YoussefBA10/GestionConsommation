@@ -1,0 +1,111 @@
+{% extends 'index-admin.html.twig' %}
+
+{% block body %}
+
+ {% block showactions %}
+  {% endblock %}
+   {% block search %}
+  {% endblock %}
+ {% block challenges %}
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modernize Free</title>
+  <link rel="shortcut icon" type="image/png" href="{{asset('images/logos/favicon.png')}}" />
+  <link rel="stylesheet" href="{{asset('css/styles.min.css')}}" />
+</head>
+
+<body>
+  <!--  Body Wrapper -->
+    <!--  Main wrapper -->
+    <div class="body-wrapper">
+      <div class="container-fluid">
+        <div class="container-fluid">
+          <div class="card" style="margin: -50px -300px">
+            <div class="card-body">
+              <h5 class="card-title fw-semibold mb-4">Forms</h5>
+              <div class="card">
+                <div class="card-body">
+                  <form ction="" method="post">
+                  {{ form_start(formA, {'attr': {'class': 'item-details-page'}}) }}
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Saisir le nom</label>
+                      <div id="emailHelp" class="form-text">{{ form_widget(formA.nom, {'attr': {'class': 'form-control'}, 'id': 'type-field','placeholder' : 'Choisir la consommation'}) }}</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Categorie</label>
+                      <div id="emailHelp" class="form-text">{{ form_widget(formA.categorie, {'attr': {'class': 'form-control'}, 'id': 'type-field','placeholder' : 'Saisir le score'}) }}</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Type</label>
+                      <div id="emailHelp" class="form-text">{{ form_widget(formA.Type, {'attr': {'class': 'form-control'}, 'id': 'type-field','placeholder' : 'Choisir la categorie'}) }}</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Unite de mesure</label>
+                      <div id="emailHelp" class="form-text">{{ form_widget(formA.materiel, {'attr': {'class': 'form-control'}, 'id': 'type-field','placeholder' : 'Choisir la categorie'}) }}</div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Type de consommation  </label>
+                      <div id="emailHelp" class="form-text">{{ form_widget(formA.type, {'attr': {'class': 'form-control'}, 'id': 'type-field','placeholder' : 'Electrique, plastique, carburant, gaz'}) }}</div>
+                    </div>
+                    <div class="mb-3 form-check">
+                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    {{ form_end(formA) }}
+                    <a class="fw-semibold mb-0 fs-4" href="{{path('admin',{'id' : user.id}) }}"> Retourner</a>
+                  </form>
+                </div>
+              </div>
+              <h5 class="card-title fw-semibold mb-4">Disabled forms</h5>
+              <div class="card mb-0">
+                <div class="card-body">
+                  <form>
+                    <fieldset disabled>
+                      <legend>Disabled fieldset example</legend>
+                      <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Disabled input</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                      </div>
+                      <div class="mb-3">
+                        <label for="disabledSelect" class="form-label">Disabled select menu</label>
+                        <select id="disabledSelect" class="form-select">
+                          <option>Disabled select</option>
+                        </select>
+                      </div>
+                      <div class="mb-3">
+                        <div class="form-check">
+                          <input class="form-check-input" type="checkbox" id="disabledFieldsetCheck" disabled>
+                          <label class="form-check-label" for="disabledFieldsetCheck">
+                            Can't check this
+                          </label>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/js/sidebarmenu.js"></script>
+  <script src="../assets/js/app.min.js"></script>
+  <script src="../assets/libs/simplebar/dist/simplebar.js"></script>
+</body>
+
+</html>
+
+
+
+{% endblock %}
+{% endblock %}

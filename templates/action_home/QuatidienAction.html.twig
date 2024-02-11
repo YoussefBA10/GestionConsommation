@@ -1,0 +1,231 @@
+{% extends 'suivre.html.twig' %}
+{% block title %}Historique {% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+        border-radius: 50%;
+    }
+</style>
+<head>
+    <title>User Graph</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+{% block header %}
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="{{ asset('images/logo.png') }}" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="explore.html" class="active">Explore</a></li>
+                        <li><a href="details.html">Item Details</a></li>
+                        <li><a href="author.html">Author</a></li>
+                        <li><a href="create.html">Create Yours</a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+{% endblock %}
+{% block afterheader %}
+  <div class="page-heading" style="padding: 100px 0;">
+    <div class="container"style="margin-top: 50px ;">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6>Nous faisons de meilleurs humains</h6>
+          <h2>Consulter vos actions</h2>
+          <span>Home > <a href="{{path ('app_home',{'id' : user.id})}}">Gestion Consommation</a> > <a href="{{path ('app_action_suivre',{'id' : user.id})}}">Suivre Consommation</a></span>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+    {% block cards %}
+    <style> 
+.chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.chart {
+  background-color: #F3F7EE;
+  padding: 20px;
+  border-radius: 10px;
+}
+.text-center {
+color: rgb(79, 97, 39);
+}   
+</style>
+    <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+    <div class="featured-explore">
+      <div class="container-fluid">
+        <div class="row">
+        <div class="col-lg-4" style="margin-left: auto; margin-right:auto; margin-top:-40px"> 
+                <!-- Place your doughnut chart here -->
+                <div class="chart">
+                    <canvas id="userChart"></canvas>
+                    <script>
+                        var labels = {{ labels2|raw }};
+                        var data = {{ data2|raw }};
+                        // Define an array of colors for the sections
+                        var sectionColors = ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)', 'rgba(153, 102, 255, 0.2)'];
+                        // Create an array to store the backgroundColors
+                        var backgroundColors = [];
+                        // Generate random colors for each section
+                        for (var i = 0; i < data.length; i++) {
+                            var randomIndex = Math.floor(Math.random() * sectionColors.length);
+                            backgroundColors.push(sectionColors[randomIndex]);
+                        }
+
+                        var ctx = document.getElementById('userChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'label',
+                                    data: data,
+                                    backgroundColor: backgroundColors,
+                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+            
+        </div> 
+        <div class="col-lg-4 text-center " style="margin-left:auto;margin-right:auto; margin-top:20px; margin-bottom:40px">
+                <h5 class="">Tracker Votre Consommation Avec Précision</h5>
+        </div>
+        <div class="col-lg-11"style="margin-left:50px">
+            <div class="owl-features owl-carousel">
+            {% for action in actions %}
+              <div class="item">
+                <div class="thumb">
+                {% if action.type.getType == "electrique" %}
+                    <img src="{{ asset('images/zbynek-burival-V4ZYJZJ3W4M-unsplash.png') }}" alt="" style="border-radius: 20px;">
+                {% elseif action.type.getType == "plastique" %}
+                    <img src="{{ asset('images/artem-labunsky-jGXKZGMwepY-unsplash.png') }}" alt="" style="border-radius: 20px;">
+                {% elseif action.type.getType == "carburant" %}
+                    <img src="{{ asset('images/erik-mclean-VtHK0R6sARg-unsplash.png') }}" alt="" style="border-radius: 20px;">
+                {% elseif action.type.getType == "gaz" %}
+                    <img src="{{ asset('images/alex-belogub-C5sWaDWiJBo-unsplash.png') }}" alt="" style="border-radius: 20px;">
+                {% endif %}
+                  <div class="hover-effect">
+                    <div class="content">
+                      <h4>{{action.type.nom}}</h4>
+                      <span class="author">
+                        <h6>Percentage de cette consommation de {{action.user}}: {{ action.calculePourcentage(actions,action.getUser,action.type.getMateriel) }}%<br><a href="#">{{action.getNiveauDanger}}</a></h6>
+                      </span>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>   
+            {% endfor %} 
+              </div>
+            </div>
+          </div>
+      </div>
+    </div> 
+    {% endblock %}
+    <div class="sub-items">          
+             </div>
+<div class="example-wrapper">
+    Liste des actions: <a href="{{ path('app_action_ajouter',{'id' : user.id}) }}">Ajouter Consommation</a>                  
+    <table>
+        <tr>
+            <th>Action</th>
+            <th>Quantité</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Details</th>
+        </tr>
+        {% if actions is empty %}
+        Error: Empty table
+        {% else  %} 
+       {% for action in actions %}
+    <tr>
+        <td>{{ action.type }}</td>
+                {% if action.type.getMateriel == 'gaz' %}
+                    <td>{{ action.quantite }} m³</td>
+                {% elseif action.type.getMateriel == 'liquid' %}
+                    <td>{{ action.quantite }} L</td>  
+                {% elseif action.type.getMateriel == 'solid' %}
+                    <td>{{ action.quantite }} KG</td>
+                {% elseif action.type.getMateriel == 'temps' %}
+                    <td>{{ action.getQuantiteTime | date('H:i')}} </td>
+                {% endif %}
+        <td>{{ action.date | date('Y-m-d H:i:s') }}</td>
+        <td>{{ action.description }}</td>
+        <td>{{ action.getActionScore() }}</td>
+        <td><a href="">Show</a></td>
+    </tr>
+    
+{% endfor %}
+{% endif  %} 
+    </table>
+</div>
+{% endblock %}
+  

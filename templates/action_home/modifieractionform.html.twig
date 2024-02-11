@@ -1,0 +1,268 @@
+{% extends 'create.html.twig' %}
+
+{% block title %}Historique {% endblock %}
+
+{% block form %}
+<style>
+
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+        border-radius: 50%;
+    }
+    .form-text {
+        border-radius: 90%;
+        background-color: #f2f2f2;
+    }
+</style>
+{% block header %}
+  <!-- ***** Header Area Start ***** -->
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="{{ asset('images/logo.png')}}" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="explore.html">Explore</a></li>
+                        <li><a href="details.html">Item Details</a></li>
+                        <li><a href="author.html">Author</a></li>
+                        <li><a href="create.html" class="active">Create Yours</a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  <!-- ***** Header Area End ***** -->
+{% endblock %}
+{% block create %}
+  <div class="item-details-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="section-heading">   
+            <div class="line-dec"></div>
+            <h2>Gestionnier votre  <em>Consommation</em></h2>
+            <span>Home > <a href="{{path ('app_home',{'id' : user.id})}}">Gestion Consommation</a> > <a href="{{path ('app_action_ajouter',{'id' : user.id})}}">Gerer Les Consommations</a> > <a href="">Modifier Consommation</a></span>
+          </div>
+        </div>
+        <!--  Formulaire ajouter action -->
+        <div class="col-lg-12">
+          <form id="contact" action="" method="post">
+          {{ form_start(formA, {'attr': {'class': 'item-details-page'}}) }}
+            <div class="row">
+              <div class="col-lg-4">
+                <fieldset>
+                  <div class="form-group">
+                        {{ form_label(formA.categorie, 'Categorie', {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(formA.categorie, {'attr': {'class': 'form-control'}, 'id': 'categorie-field','placeholder' : 'Choisir la Categorie De Consommation'}) }}
+                    </div>
+                </fieldset>
+              </div>
+              <div class="col-lg-4">
+                <fieldset>
+                  <div class="form-group" id="type-field-container">
+                    {{ form_label(formA.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(formA.type, {'attr': {'class': 'form-control'}, 'id': 'type-field','placeholder' : 'Choisir la consommation'}) }}
+                </div>
+                </fieldset>
+              </div>
+              <div class="col-lg-4">
+                <fieldset>
+            <h6>Metric Type</h6>
+                    <div>
+                        <label>
+                            <input type="radio" name="quantite_type" value="time"style="transform: scale(0.8);">
+                            Time
+                        </label>
+                        <label>
+                            <input type="radio" name="quantite_type" value="solid"style="transform: scale(0.8);">
+                            Solid
+                        </label>
+                    </div>
+                </fieldset>
+              </div>
+              <div class="col-lg-6">
+                <fieldset>
+                  <div id="time-container" style="display: none;">
+            <div class="form-group">
+                {{ form_label(formA.quantite_time, 'Quantite', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(formA.quantite_time, {'attr': {'class': 'form-input','style': 'display: block;width: 100%;padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;-webkit-appearance: none;-moz-appearance: none;appearance: none;border-radius: 0.25rem;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;'}}) }}
+                {% if form_errors(formA.quantite_time) %}
+                <div class="error-message">{{ form_errors(formA.quantite_time) }}</div>
+                {% endif %}
+            </div>
+        </div>
+                </fieldset>
+              </div>
+              <div class="col-lg-6">
+                <fieldset>
+                  <div id="solid-container" style="display: none;">
+            <div class="form-group">
+                {{ form_label(formA.quantite, 'Quantite', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(formA.quantite, {'attr': {'class': 'form-input','style': 'display: block;width: 100%;padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;-webkit-appearance: none;-moz-appearance: none;appearance: none;border-radius: 0.25rem;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;'}}) }}
+                {% if form_errors(formA.quantite) %}
+                <div class="error-message">{{ form_errors(formA.quantite) }}</div>
+                {% endif %}
+            </div>
+        </div>
+                </fieldset>
+              </div>
+                <div class="col-lg-4">
+                    <fieldset>
+                    <div class="form-groups">
+                        {{ form_label(formA.description, 'Description', {'label_attr': {'class': 'form-label','style':'margin-top:10px;'}}) }}
+                        {{ form_widget(formA.description, {'attr': {'class': 'form-control', 'style': 'display: block;width: 100%;padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;-webkit-appearance: none;-moz-appearance: none;appearance: none;border-radius: 0.25rem;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;'}}) }}
+                    </div>
+                    </fieldset>
+                </div>
+              <div class="col-lg-4">
+                <fieldset>
+        <div class="form-group">
+            {{ form_label(formA.date, 'Date', {'label_attr': {'class': 'form-label','style':'margin-top:10px;'}}) }}
+            {{ form_widget(formA.date, {'attr': {'class': 'form-control', 'type': 'date','style': 'display: block;width: 100%;padding: 0.375rem 0.75rem;font-size: 1rem;font-weight: 400;line-height: 1.5;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;-webkit-appearance: none;-moz-appearance: none;appearance: none;border-radius: 0.25rem;transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;'}}) }}
+        </div>
+              <div class="col-lg-8">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="orange-button">Modifier</button>
+                </fieldset>
+              </div>
+            </div>
+             {{ form_end(formA) }}
+          </form>
+        </div>
+<!-- End Formulaire ajouter action -->
+
+
+<!-- Afficher Profile -->
+        <div class="col-lg-12">
+          <div class="section-heading">
+            <div class="line-dec"></div>
+            <h2>Le <em>Futur </em> Est Entre  <em> Vos</em> Mains </h2>
+          </div>
+        </div>
+        <div class="col-lg-8 align-self-center">
+          <h4>Profile</h4>
+          <span class="author">
+              <img src="{{ asset('images/author-02.jpg')}}" alt="" style="max-width: 50px; border-radius: 50%;">
+              <h6>{{user.nom}}<br><a href="#">dd</a></h6>
+          </span>
+          <div class="row">
+              <div class="col-3">
+                  <span class="bid">
+                      {% if user.getUserScore >= 8000 and user.getUserScore <= 10000 %}
+                          Niveau Danger<br><strong>Danger!</strong><br><em>($8,025.50)</em>
+                      {% elseif user.getUserScore >= 1%}
+                          Niveau Danger<br><strong>Danger!</strong><br><em>(Vous presentez un danger!)</em>
+                      {% endif %}
+                  </span>
+              </div>
+              <div class="col-4">
+                  <span class="owner">
+                      Bonus<br><strong>{{user.bonus}}</strong><br><em>(@{{user.nom}})</em>
+                  </span>
+              </div>
+              <div class="col-5">
+                  <span class="ends">
+                      Dernier Action<br><strong>{{lastActionDate}}</strong><br><em>(January 22nd, 2021)</em>
+                  </span>
+              </div>
+          </div>
+          <form action="submit">
+              <label for="quantity-text">Consulter Profile:</label>
+              <button type="submit" id="form-submit" class="main-button">Submit </button>
+          </form>
+          </div>
+      </div>
+    </div>
+  </div>
+<!-- END Afficher Profile -->
+<!-- Afficher Actions -->
+{% block afficheractions %}
+ 
+{% endblock %}
+<!-- END Afficher Actions -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('input[name="quantite_type"]').change(function() {
+            var selectedValue = $(this).val();
+            var timeContainer = $('#time-container');
+            var solidContainer = $('#solid-container');
+
+            if (selectedValue === 'time') {
+                timeContainer.show();
+                solidContainer.hide();
+            } else if (selectedValue === 'solid') {
+                timeContainer.hide();
+                solidContainer.show();
+            }
+        });
+        
+    });
+  // Update the form type field without submitting the form
+/*    var userId = {{ user.id }};
+    $('#categorie-field').change(function() {
+        var selectedValue = $(this).val();
+        // Fetch data from the server
+        $.ajax({
+            url: '/action/update-form/' + selectedValue +'/'+ userId ,
+            method: 'POST',
+            success: function(response) {
+                // Get just the type field HTML
+                var typeFieldHtml = $(response).find('#type-field').html();
+                
+                // Update the container
+                $('#type-field').html(typeFieldHtml);
+            },
+            error: function(xhr, status, error) {
+                console.error(error);
+            }
+        });
+    });*/
+</script>
+{% endblock %}
+{% endblock %}

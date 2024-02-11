@@ -1,0 +1,128 @@
+{% extends 'details.html.twig' %}
+{% block title %}Historique {% endblock %}
+{% block body %}
+<html>
+{% block header %}
+  <header class="header-area header-sticky">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav">
+                    <!-- ***** Logo Start ***** -->
+                    <a href="index.html" class="logo">
+                        <img src="{{ asset('images/logo.png')}}" alt="">
+                    </a>
+                    <!-- ***** Logo End ***** -->
+                    <!-- ***** Menu Start ***** -->
+                    <ul class="nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="explore.html">Explore</a></li>
+                        <li><a href="details.html" class="active">Item Details</a></li>
+                        <li><a href="author.html">Author</a></li>
+                        <li><a href="create.html">Create Yours</a></li>
+                    </ul>   
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                    <!-- ***** Menu End ***** -->
+                </nav>
+            </div>
+        </div>
+    </div>
+  </header>
+  {% endblock %}
+{% block afterheader %}
+<div class="page-heading normal-space">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h6></h6>
+          <h2>Gestion Consommation Module</h2>
+          <span>Home > <a href="">Gestion Consommation</a></span>
+          <div class="buttons">
+            <div class="main-button">
+              <a href="{{ path ('app_action_suivre',{'id' : 1})}}">Suivre Consommation</a>
+            </div>
+            <div class="border-button">
+              <a href="{{ path ('app_action_ajouter',{'id' : 1})}}">Gestionner Consommation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block chart %}
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="row"> 
+<div class="col-lg-5 align-self-center">
+        <h4>Profile</h4>
+        <span class="author">
+            <img src="{{ asset('images/author-02.jpg')}}" alt="" style="max-width: 50px; border-radius: 50%;">
+            <h6>{{user.nom}}<br><a href="#">dd</a></h6>
+        </span>
+        <div class="row">
+            <div class="col-3">
+                <span class="bid">
+                    {% if user.getUserScore >= 8000 and user.getUserScore <= 10000 %}
+                        Niveau Danger<br><strong>Danger!</strong><br><em>($8,025.50)</em>
+                    {% elseif user.getUserScore >= 1%}
+                        Niveau Danger<br><strong>Danger!</strong><br><em>(Vous presentez un danger!)</em>
+                    {% endif %}
+                </span>
+            </div>
+            <div class="col-4">
+                <span class="owner">
+                    Bonus<br><strong>{{user.bonus}}</strong><br><em>(@{{user.nom}})</em>
+                </span>
+            </div>
+            <div class="col-5">
+                <span class="ends">
+                    Dernier Action<br><strong>{{lastActionDate}}</strong><br><em>(January 22nd, 2021)</em>
+                </span>
+            </div>
+        </div>
+        <form action="submit">
+            <label for="quantity-text">Consulter Profile:</label>
+            <button type="submit" id="form-submit" class="main-button">Submit </button>
+        </form>
+    </div>
+<div class="chart col-lg-7">
+        <canvas id="userChart"></canvas>
+        <script>
+            var labels = {{ labels|raw }};
+            var data = {{ data|raw }};
+            
+            var ctx = document.getElementById('userChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '{{user.nom}}',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>
+        {% endblock %}
+        
+        </body>
+</html>
+{% endblock %}

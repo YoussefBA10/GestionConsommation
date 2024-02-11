@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique {% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+        color: #333;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+
+    img {
+        max-width: 100px;
+        max-height: 100px;
+        border-radius: 50%;
+    }
+</style>
+<div class="form-container">
+   {% for user in user %}
+                <td>{{ user.id }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.getUserScore }}</td>
+                <a href="{{ path('app_action_home',{'id' : user.id}) }}">Suivre Consommation</a>
+                {% endfor %}
+                
+</div>
+
+{% endblock %}  

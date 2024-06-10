@@ -1,4 +1,4 @@
-Eco-Friendly Account Management 📚🌳
+**Eco-Friendly Account Management 📚🌳**
 This project enables clients to easily create and manage their accounts, while also providing tools to help them make more sustainable choices. Key features include:
 
 Account Creation and Management 💻

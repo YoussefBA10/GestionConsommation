@@ -7,11 +7,13 @@ This project enables clients to easily create and manage their accounts, while a
 Intuitive sign-up and login process
 Ability to update personal information and preferences
 Secure storage of account details
+
 **Consumption Tracking 📊🌍**
 
 Track energy, water, and resource usage over time
 Receive personalized recommendations to reduce environmental impact
 Set custom goals and monitor progress towards them
+
 **Eco-Friendly Suggestions 💡🌳**
 
 Tailored tips to adopt more sustainable habits
